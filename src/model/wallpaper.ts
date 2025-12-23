@@ -7,7 +7,9 @@ interface Wallpaper{
     previewUrl:string,
     originalUrl:string,
     CreatedTimeStamp:string,
-    UpdateTimeStamp:string
+    UpdateTimeStamp:string,
+    featured:boolean,
+    trending:boolean
 
 }
 const wallpaperSchema=new mongoose.Schema({
@@ -35,6 +37,14 @@ const wallpaperSchema=new mongoose.Schema({
         type:String,
         enum:["uploading","success","failed"],
         default :"uploading"
+    },
+    feature:{
+        type:Boolean,
+        default:false
+    },
+    trending:{
+        type:Boolean,
+        default:false
     }
     
 },{timestamps:true});
