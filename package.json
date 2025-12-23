@@ -11,16 +11,19 @@
   "type": "module",
   "main": "dist/server.js",
   "scripts": {
-   "dev": "nodemon --watch src --exec node --loader ts-node/esm src/server.ts",
+    "dev": "nodemon --watch src --exec node --loader ts-node/esm src/server.ts",
     "build": "npx tsc",
     "start": "node dist/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "@types/multer": "^2.0.0",
+    "cloudinary": "^2.8.0",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
-    "mongoose": "^9.0.2"
+    "mongoose": "^9.0.2",
+    "multer": "^2.0.2"
   },
   "devDependencies": {
     "@types/cors": "^2.8.19",

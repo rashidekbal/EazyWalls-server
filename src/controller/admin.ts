@@ -1,0 +1,51 @@
+import Express from "express"
+import { uploadCategoryImage, uploadNewWallpaper } from "../services/mediaUpload.js";
+import { wallpaperModel } from "../model/wallpaper.js";
+import { categoryModel } from "../model/category.js";
+const uploadWallpaperController=async(req:Express.Request,res:Express.Response)=>{
+    const filePath:string|undefined=req.file?.path;
+    const category:string|undefined=req.body?.category;
+    let tag:string|undefined=req.body?.tags;
+    if(!filePath||!category||!tag)return res.sendStatus(400);
+    const tags:string[]|undefined=tag.split(",");
+    try {
+        let response=await wallpaperModel.create({
+            category:category,
+            tags:tags,
+            author:"rashid",
+            previewUrl:null,
+            originalUrl:"placeholder",
+            status:"uploading"
+        })
+        console.log(response._id);
+        uploadNewWallpaper(filePath,response._id);
+        res.sendStatus(201);
+    } catch (error) {
+       return res.sendStatus(500);
+        
+    }
+  
+    
+}
+
+const addCategoryController=async(req:Express.Request,res:Express.Response)=>{
+    const filePath:string|undefined=req.file?.path;
+    const category:string|undefined=req.body?.category;
+     if(!filePath||!category)return res.sendStatus(400);
+     try {
+        let response=await categoryModel.create({
+           title:category,
+           previewUrl:"placeholder",
+        })
+        console.log(response._id);
+        uploadCategoryImage(filePath,response._id);
+        res.sendStatus(201);
+    } catch (error) {
+       return res.sendStatus(500);
+        
+    }
+
+}
+
+
+export {uploadWallpaperController,addCategoryController}
