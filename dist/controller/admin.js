@@ -19,7 +19,7 @@ const uploadWallpaperController = async (req, res) => {
         });
         console.log(response._id);
         uploadNewWallpaper(filePath, response._id);
-        res.sendStatus(201);
+        return res.sendStatus(201);
     }
     catch (error) {
         return res.sendStatus(500);
@@ -37,7 +37,7 @@ const addCategoryController = async (req, res) => {
         });
         console.log(response._id);
         uploadCategoryImage(filePath, response._id);
-        res.sendStatus(201);
+        return res.sendStatus(201);
     }
     catch (error) {
         return res.sendStatus(500);

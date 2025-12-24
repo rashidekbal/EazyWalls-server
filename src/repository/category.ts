@@ -1,7 +1,11 @@
-import { categoryModel } from "../category.js";
-const getCategories=async(page:number)=>{
+import { categoryModel } from "../model/category.js";
+const getCategories=async()=>{
     return await categoryModel.aggregate([
+      {$match:{
+        status:"success"
+      }},
       {
+        
         $lookup: {
           from: "wallpapers",
           localField: "title",
@@ -11,7 +15,7 @@ const getCategories=async(page:number)=>{
       },
       { $addFields: { wallpaperCount: { $size: "$wallpaper" } } },
       {
-        $project: { wallpaper: 0, _id: 0, createdAt: 0, updatedAt: 0, __v: 0 },
+        $project: { wallpaper: 0, _id: 1, createdAt: 0, updatedAt: 0, __v: 0 },
       },
     ]);
 }

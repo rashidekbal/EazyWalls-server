@@ -39,7 +39,7 @@ const addCategoryController=async(req:Express.Request,res:Express.Response)=>{
         })
         console.log(response._id);
         uploadCategoryImage(filePath,response._id);
-        res.sendStatus(201);
+       return  res.sendStatus(201);
     } catch (error) {
        return res.sendStatus(500);
         

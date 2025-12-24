@@ -24,6 +24,14 @@ const wallpaperSchema = new mongoose.Schema({
         type: String,
         enum: ["uploading", "success", "failed"],
         default: "uploading"
+    },
+    featured: {
+        type: Boolean,
+        default: false
+    },
+    trending: {
+        type: Boolean,
+        default: false
     }
 }, { timestamps: true });
 const wallpaperModel = mongoose.model("wallpaper", wallpaperSchema);

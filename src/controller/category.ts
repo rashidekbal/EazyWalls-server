@@ -1,6 +1,6 @@
 import { categoryModel } from "../model/category.js";
 import  Express  from "express";
-import { getCategories } from "../model/repository/category.js";
+import { getCategories } from "../repository/category.js";
 import ApiError from "../common/apieError.js";
 import ApiResponse from "../common/apiResponse.js";
 
@@ -9,7 +9,7 @@ const getCategoriesController = async (
   res: Express.Response
 ) => {
   try {
-    let response=await getCategories(1);
+    let response=await getCategories();
    return  res.status(200).json(new ApiResponse(response))
   } catch (error) {
     console.log(error)

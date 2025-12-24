@@ -38,7 +38,7 @@ const wallpaperSchema=new mongoose.Schema({
         enum:["uploading","success","failed"],
         default :"uploading"
     },
-    feature:{
+    featured:{
         type:Boolean,
         default:false
     },
