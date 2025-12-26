@@ -1,7 +1,8 @@
-import Express from "express"
-import { uploadCategoryImage, uploadNewWallpaper } from "../services/mediaUpload.js";
+import Express, { response } from "express"
+import { updateCategoryImage, uploadCategoryImage, uploadNewWallpaper } from "../services/mediaUpload.js";
 import { wallpaperModel } from "../model/wallpaper.js";
 import { categoryModel } from "../model/category.js";
+import { addFeatured, AddTrending, deleteWallpaper, removeFeatured, removeTrending } from "../repository/wallpaper.js";
 const uploadWallpaperController=async(req:Express.Request,res:Express.Response)=>{
     const filePath:string|undefined=req.file?.path;
     const category:string|undefined=req.body?.category;
@@ -18,7 +19,7 @@ const uploadWallpaperController=async(req:Express.Request,res:Express.Response)=
             status:"uploading"
         })
         console.log(response._id);
-        uploadNewWallpaper(filePath,response._id);
+       await  uploadNewWallpaper(filePath,response._id);
        return  res.sendStatus(201);
     } catch (error) {
        return res.sendStatus(500);
@@ -38,7 +39,7 @@ const addCategoryController=async(req:Express.Request,res:Express.Response)=>{
            previewUrl:"placeholder",
         })
         console.log(response._id);
-        uploadCategoryImage(filePath,response._id);
+       await  uploadCategoryImage(filePath,response._id);
        return  res.sendStatus(201);
     } catch (error) {
        return res.sendStatus(500);
@@ -46,6 +47,111 @@ const addCategoryController=async(req:Express.Request,res:Express.Response)=>{
     }
 
 }
+const deleteWallpaperController=async(req:Express.Request,res:Express.Response)=>{
+   let ids:string|undefined=req.body?.ids;
+   if(!ids)return response.sendStatus(400);
+   let idArray:string[]=ids.split(",");
+   try {
+      idArray.forEach(async(id)=>{
+         if(id.length<24){
+            return;
+         }
+      await deleteWallpaper(id);
+   });
+   res.status(200).json({msg:"success"});
+   } catch (error) {
+      console.log(error);
+      res.sendStatus(500);
+      
+   }
+   
+}
+const updateCategoryPreviewUrlController=async(req:Express.Request,res:Express.Response)=>{
+    const filePath:string|undefined=req.file?.path;
+    const category:string|undefined=req.body?.category;
+     if(!filePath||!category)return res.sendStatus(400);
+    try {
+      await  updateCategoryImage(filePath,category);
+       return res.sendStatus(200);
+      
+    } catch (error) {
+      console.log("error uploading "+error);
+     return res.sendStatus(500); 
+    }
+}
+
+const removeTrendingController=async(req:Express.Request,res:Express.Response)=>{
+    let ids:string|undefined=req.body?.ids;
+   if(!ids)return response.sendStatus(400);
+   let idArray:string[]=ids.split(",");
+   try {
+      idArray.forEach(async(id)=>{
+         if(id.length<24){
+            return;
+         }
+      await removeTrending(id);
+   });
+   res.status(200).json({msg:"success"});
+   } catch (error) {
+      console.log(error);
+      res.sendStatus(500);   
+   }
+
+}
+const removeFeaturedController=async(req:Express.Request,res:Express.Response)=>{
+    let ids:string|undefined=req.body?.ids;
+   if(!ids)return response.sendStatus(400);
+   let idArray:string[]=ids.split(",");
+   try {
+      idArray.forEach(async(id)=>{
+         if(id.length<24){
+            return;
+         }
+      await removeFeatured(id);
+   });
+   res.status(200).json({msg:"success"});
+   } catch (error) {
+      console.log(error);
+      res.sendStatus(500);   
+   }
+
+}
+const addTrendingWallpaperController=async(req:Express.Request,res:Express.Response)=>{
+    let ids:string|undefined=req.body?.ids;
+   if(!ids)return response.sendStatus(400);
+   let idArray:string[]=ids.split(",");
+   try {
+      idArray.forEach(async(id)=>{
+         if(id.length<24){
+            return;
+         }
+      await AddTrending(id);
+   });
+   res.status(200).json({msg:"success"});
+   } catch (error) {
+      console.log(error);
+      res.sendStatus(500);   
+   }
+
+}
+const addFeaturedWallpaperController=async(req:Express.Request,res:Express.Response)=>{
+    let ids:string|undefined=req.body?.ids;
+   if(!ids)return response.sendStatus(400);
+   let idArray:string[]=ids.split(",");
+   try {
+      idArray.forEach(async(id)=>{
+         if(id.length<24){
+            return;
+         }
+      await addFeatured(id);
+   });
+   res.status(200).json({msg:"success"});
+   } catch (error) {
+      console.log(error);
+      res.sendStatus(500);   
+   }
+
+}
 
 
-export {uploadWallpaperController,addCategoryController}
+export {uploadWallpaperController,addCategoryController,deleteWallpaperController,updateCategoryPreviewUrlController,removeTrendingController,addTrendingWallpaperController,addFeaturedWallpaperController,removeFeaturedController}

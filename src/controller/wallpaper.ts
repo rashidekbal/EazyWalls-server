@@ -1,6 +1,6 @@
 import express from "express";
 import ApiError from "../common/apieError.js";
-import { getWallpapers, getWallpapersOfType } from "../repository/wallpaper.js";
+import { getNonFeaturedWallpapers, getNonTrendingWallPapers, getWallpapers, getWallpapersOfType } from "../repository/wallpaper.js";
 import ApiResponse from "../common/apiResponse.js";
 const getWallaperController=async(req:express.Request,res:express.Response)=>{
     const category:string|undefined=req.query?.category as string;
@@ -33,4 +33,22 @@ const getWallaperController=async(req:express.Request,res:express.Response)=>{
     }
 
 }
-export {getWallaperController}
+const getNonFeaturedWallpaperController=async(req:express.Request,res:express.Response)=>{
+  try{
+let response=await getNonFeaturedWallpapers();
+    return res.status(200).json(new ApiResponse(response));
+  }catch(error){
+     return res.status(500).json(new ApiError("error on server"));     
+  }
+
+}
+const getNonTrendingWallpaperController=async(req:express.Request,res:express.Response)=>{
+  try{
+let response=await getNonTrendingWallPapers();
+    return res.status(200).json(new ApiResponse(response));
+  }catch(error){
+     return res.status(500).json(new ApiError("error on server"));     
+  }
+
+}
+export {getWallaperController,getNonFeaturedWallpaperController,getNonTrendingWallpaperController}

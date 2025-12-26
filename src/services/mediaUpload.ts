@@ -63,4 +63,31 @@ const uploadCategoryImage = async (
 
 
 };
-export { uploadNewWallpaper, uploadCategoryImage };
+const updateCategoryImage = async (
+  filePath: string,
+  category:string,
+) => {
+    try {
+    const link = await uploadOnColudinary(filePath);
+    if (!link) {
+    throw new Error("error upload failed");
+    }
+    const result = await categoryModel.updateOne(
+      { title: category },
+      {
+      previewUrl:link,
+      status:"success"
+      }
+    );
+  } catch (error) {
+    console.log(
+      "error occured mediaUplaod.ts uploadCategory method : ",
+      error
+    );
+  }
+
+
+
+
+};
+export { uploadNewWallpaper, uploadCategoryImage,updateCategoryImage };

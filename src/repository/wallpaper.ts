@@ -1,3 +1,4 @@
+import mongoose, { mongo } from "mongoose";
 import { Wallpapertype } from "../common/enum.js";
 import { wallpaperModel } from "../model/wallpaper.js";
 const getWallpapers=async(category:string|null,page:number)=>{
@@ -11,7 +12,12 @@ const getWallpapers=async(category:string|null,page:number)=>{
 ])
     }
     return wallpaperModel.find({status:"success"});
-
+}
+const getNonTrendingWallPapers=async()=>{
+    return wallpaperModel.find({status:"success",trending:false});
+}
+const getNonFeaturedWallpapers=async()=>{
+    return wallpaperModel.find({status:"success",trending:false});
 }
 const getWallpapersOfType=async(wallpaperType:Wallpapertype)=>{
     if(wallpaperType==="FEATURED"){
@@ -28,4 +34,28 @@ const getWallpapersOfType=async(wallpaperType:Wallpapertype)=>{
     }}]);
 
 }
-export {getWallpapers,getWallpapersOfType}
+const deleteWallpaper=async(id:string)=>{
+    let objectId=mongoose.Types.ObjectId.createFromHexString(id);
+   return await wallpaperModel.deleteOne({_id:objectId});
+}
+const removeTrending=async(id:string)=>{
+     let objectId=mongoose.Types.ObjectId.createFromHexString(id);
+   return await wallpaperModel.updateOne({_id:objectId},{$set:{trending:false}});
+
+}
+const removeFeatured=async(id:string)=>{
+     let objectId=mongoose.Types.ObjectId.createFromHexString(id);
+   return await wallpaperModel.updateOne({_id:objectId},{$set:{featured:false}});
+
+}
+const AddTrending=async(id:string)=>{
+     let objectId=mongoose.Types.ObjectId.createFromHexString(id);
+   return await wallpaperModel.updateOne({_id:objectId},{$set:{trending:true}});
+
+}
+const addFeatured=async(id:string)=>{
+     let objectId=mongoose.Types.ObjectId.createFromHexString(id);
+   return await wallpaperModel.updateOne({_id:objectId},{$set:{featured:true}});
+
+}
+export {getWallpapers,getWallpapersOfType,deleteWallpaper,removeTrending,getNonFeaturedWallpapers,getNonTrendingWallPapers,AddTrending,addFeatured,removeFeatured}
