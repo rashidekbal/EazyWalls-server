@@ -50,12 +50,12 @@ const removeFeatured=async(id:string)=>{
 }
 const AddTrending=async(id:string)=>{
      let objectId=mongoose.Types.ObjectId.createFromHexString(id);
-   return await wallpaperModel.updateOne({_id:objectId},{$set:{trending:true}});
+   return await wallpaperModel.updateOne({_id:objectId},{$set:{trending:true,featured:false}});
 
 }
 const addFeatured=async(id:string)=>{
      let objectId=mongoose.Types.ObjectId.createFromHexString(id);
-   return await wallpaperModel.updateOne({_id:objectId},{$set:{featured:true}});
+   return await wallpaperModel.updateOne({_id:objectId},{$set:{featured:true,trending:false}});
 
 }
 export {getWallpapers,getWallpapersOfType,deleteWallpaper,removeTrending,getNonFeaturedWallpapers,getNonTrendingWallPapers,AddTrending,addFeatured,removeFeatured}
