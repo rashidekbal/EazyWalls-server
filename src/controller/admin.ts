@@ -7,6 +7,8 @@ const uploadWallpaperController=async(req:Express.Request,res:Express.Response)=
     const filePath:string|undefined=req.file?.path;
     const category:string|undefined=req.body?.category;
     let tag:string|undefined=req.body?.tags;
+    let isfeatured:undefined|boolean=req.body?.isFeatured ;
+    let istrending:undefined|boolean=req.body?.isTrending ;
     if(!filePath||!category||!tag)return res.sendStatus(400);
     const tags:string[]|undefined=tag.split(",");
     try {
@@ -16,7 +18,9 @@ const uploadWallpaperController=async(req:Express.Request,res:Express.Response)=
             author:"rashid",
             previewUrl:null,
             originalUrl:"placeholder",
-            status:"uploading"
+            status:"uploading",
+            trending:istrending,
+            featured:isfeatured
         })
         console.log(response._id);
        await  uploadNewWallpaper(filePath,response._id);
