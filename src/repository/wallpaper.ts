@@ -17,7 +17,7 @@ const getNonTrendingWallPapers=async()=>{
     return wallpaperModel.find({status:"success",trending:false});
 }
 const getNonFeaturedWallpapers=async()=>{
-    return wallpaperModel.find({status:"success",trending:false});
+    return wallpaperModel.find({status:"success",featured:false});
 }
 const getWallpapersOfType=async(wallpaperType:Wallpapertype)=>{
     if(wallpaperType==="FEATURED"){
