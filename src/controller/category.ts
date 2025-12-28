@@ -9,8 +9,9 @@ const getCategoriesController = async (
   req: Express.Request,
   res: Express.Response
 ) => {
-  await connectDB();
+ 
   try {
+     await connectDB();
     let response=await getCategories();
    return  res.status(200).json(new ApiResponse(response))
   } catch (error) {

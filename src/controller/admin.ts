@@ -5,7 +5,7 @@ import categoryModel  from "../model/category.js";
 import { addFeatured, AddTrending, deleteWallpaper, removeFeatured, removeTrending } from "../repository/wallpaper.js";
 import connectDB from "../db/connection.js";
 const uploadWallpaperController=async(req:Express.Request,res:Express.Response)=>{
-   await connectDB();
+   
     const filePath:string|undefined=req.file?.path;
     const category:string|undefined=req.body?.category;
     let tag:string|undefined=req.body?.tags;
@@ -14,6 +14,7 @@ const uploadWallpaperController=async(req:Express.Request,res:Express.Response)=
     if(!filePath||!category||!tag)return res.sendStatus(400);
     const tags:string[]|undefined=tag.split(",");
     try {
+      await connectDB();
         let response=await wallpaperModel.create({
             category:category,
             tags:tags,
@@ -39,11 +40,12 @@ const uploadWallpaperController=async(req:Express.Request,res:Express.Response)=
 }
 
 const addCategoryController=async(req:Express.Request,res:Express.Response)=>{
-   await connectDB();
+   
     const filePath:string|undefined=req.file?.path;
     const category:string|undefined=req.body?.category;
      if(!filePath||!category)return res.sendStatus(400);
      try {
+      await connectDB();
         let response=await categoryModel.create({
            title:category,
            previewUrl:"placeholder",
@@ -59,11 +61,12 @@ const addCategoryController=async(req:Express.Request,res:Express.Response)=>{
 
 }
 const deleteWallpaperController=async(req:Express.Request,res:Express.Response)=>{
-   await connectDB();
+  
    let ids:string|undefined=req.body?.ids;
    if(!ids)return response.sendStatus(400);
    let idArray:string[]=ids.split(",");
    try {
+       await connectDB();
       idArray.forEach(async(id)=>{
          if(id.length<24){
             return;
@@ -79,11 +82,12 @@ const deleteWallpaperController=async(req:Express.Request,res:Express.Response)=
    
 }
 const updateCategoryPreviewUrlController=async(req:Express.Request,res:Express.Response)=>{
-   await connectDB();
+ 
     const filePath:string|undefined=req.file?.path;
     const category:string|undefined=req.body?.category;
      if(!filePath||!category)return res.sendStatus(400);
     try {
+        await connectDB();
       await  updateCategoryImage(filePath,category);
        return res.sendStatus(200);
       
@@ -94,11 +98,12 @@ const updateCategoryPreviewUrlController=async(req:Express.Request,res:Express.R
 }
 
 const removeTrendingController=async(req:Express.Request,res:Express.Response)=>{
-   await connectDB();
+
     let ids:string|undefined=req.body?.ids;
    if(!ids)return response.sendStatus(400);
    let idArray:string[]=ids.split(",");
    try {
+         await connectDB();
       idArray.forEach(async(id)=>{
          if(id.length<24){
             return;
@@ -113,11 +118,12 @@ const removeTrendingController=async(req:Express.Request,res:Express.Response)=>
 
 }
 const removeFeaturedController=async(req:Express.Request,res:Express.Response)=>{
-   await connectDB();
+
     let ids:string|undefined=req.body?.ids;
    if(!ids)return response.sendStatus(400);
    let idArray:string[]=ids.split(",");
    try {
+         await connectDB();
       idArray.forEach(async(id)=>{
          if(id.length<24){
             return;
@@ -132,11 +138,12 @@ const removeFeaturedController=async(req:Express.Request,res:Express.Response)=>
 
 }
 const addTrendingWallpaperController=async(req:Express.Request,res:Express.Response)=>{
-   await connectDB();
+  
     let ids:string|undefined=req.body?.ids;
    if(!ids)return response.sendStatus(400);
    let idArray:string[]=ids.split(",");
    try {
+       await connectDB();
       idArray.forEach(async(id)=>{
          if(id.length<24){
             return;
@@ -151,11 +158,12 @@ const addTrendingWallpaperController=async(req:Express.Request,res:Express.Respo
 
 }
 const addFeaturedWallpaperController=async(req:Express.Request,res:Express.Response)=>{
-   await connectDB();
+   
     let ids:string|undefined=req.body?.ids;
    if(!ids)return response.sendStatus(400);
    let idArray:string[]=ids.split(",");
    try {
+      await connectDB();
       idArray.forEach(async(id)=>{
          if(id.length<24){
             return;
