@@ -19,7 +19,12 @@ async function uploadOnColudinary(localpath:string) {
       resource_type: "auto",
     });
     fs.unlinkSync(localpath);
-    return response.secure_url;
+    return {
+      secure_url: response.secure_url,
+      height: response.height,
+      width: response.width,
+      public_id: response.public_id,
+    };
   } catch (error) {
     fs.unlinkSync(localpath); //remove temp file
     console.log(error);

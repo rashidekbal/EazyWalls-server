@@ -3,13 +3,19 @@ import {  categoryModel } from "../model/category.js";
 import {  wallpaperModel } from "../model/wallpaper.js";
 import uploadOnColudinary from "./cloudinary.js";
 
+const getPreviewUrl=(url:string)=>{
+    let previewUrl=url.split("/upload/");
+    let final=previewUrl[0]+"/upload/w_400,q_auto/"+previewUrl[1];
+    return final
+}
+
 const uploadNewWallpaper = async (
   filePath: string,
   id: mongoose.Types.ObjectId
 ) => {
   try {
-    const link = await uploadOnColudinary(filePath);
-    if (link==null) {
+    const uploadResult = await uploadOnColudinary(filePath);
+    if (uploadResult==null) {
       const result = await wallpaperModel.deleteOne({
         _id:id
       })
@@ -20,9 +26,12 @@ const uploadNewWallpaper = async (
     const result = await wallpaperModel.updateOne(
       { _id: id },
       {
-        previewUrl: link,
-        originalUrl: link,
+        previewUrl: getPreviewUrl(uploadResult.secure_url),
+        originalUrl: uploadResult.secure_url,
         status: "success",
+        height: uploadResult.height,
+        width: uploadResult.width,
+        public_id: uploadResult.public_id
       }
     );
   } catch (error) {
@@ -37,8 +46,8 @@ const uploadCategoryImage = async (
   id:mongoose.Types.ObjectId
 ) => {
     try {
-    const link = await uploadOnColudinary(filePath);
-    if (!link) {
+    const uploadResult = await uploadOnColudinary(filePath);
+    if (!uploadResult) {
       const result = await categoryModel.deleteOne({
         _id:id
       })
@@ -48,8 +57,9 @@ const uploadCategoryImage = async (
     const result = await categoryModel.updateOne(
       { _id: id },
       {
-      previewUrl:link,
-      status:"success"
+      previewUrl:getPreviewUrl(uploadResult.secure_url),
+      status:"success",
+      public_id: uploadResult.public_id
       }
     );
   } catch (error) {
@@ -68,15 +78,16 @@ const updateCategoryImage = async (
   category:string,
 ) => {
     try {
-    const link = await uploadOnColudinary(filePath);
-    if (!link) {
+    const uploadResult = await uploadOnColudinary(filePath);
+    if (!uploadResult) {
     throw new Error("error upload failed");
     }
     const result = await categoryModel.updateOne(
       { title: category },
       {
-      previewUrl:link,
-      status:"success"
+      previewUrl:getPreviewUrl(uploadResult.secure_url),
+      status:"success",
+      public_id: uploadResult.public_id
       }
     );
   } catch (error) {

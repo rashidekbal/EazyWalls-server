@@ -9,7 +9,10 @@ interface Wallpaper{
     CreatedTimeStamp:string,
     UpdateTimeStamp:string,
     featured:boolean,
-    trending:boolean
+    trending:boolean,
+    height:number,
+    width:number,
+    public_id?:string
 
 }
 const wallpaperSchema=new mongoose.Schema({
@@ -45,6 +48,18 @@ const wallpaperSchema=new mongoose.Schema({
     trending:{
         type:Boolean,
         default:false
+    },
+    height:{
+        type:Number,
+        required:true
+    },
+    width:{
+        type:Number,
+        required:true
+    },
+    public_id:{
+        type:String,
+        required:false
     }
     
 },{timestamps:true});

@@ -4,7 +4,8 @@ interface Category{
     title:string,
     previewUrl:string,
     createdTimeStamp:string,
-    lastUpdatedTimeStamp:string
+    lastUpdatedTimeStamp:string,
+    public_id?:string
 
 };
 const categorySchmea=new mongoose.Schema({
@@ -16,6 +17,10 @@ const categorySchmea=new mongoose.Schema({
     previewUrl:{
         type:String,
         required:true
+    },
+    public_id:{
+        type:String,
+        required:false
     },
     status:{
         type:String,

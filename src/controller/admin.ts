@@ -20,12 +20,15 @@ const uploadWallpaperController=async(req:Express.Request,res:Express.Response)=
             originalUrl:"placeholder",
             status:"uploading",
             trending:istrending,
-            featured:isfeatured
+            featured:isfeatured,
+            height:0,
+            width:0
         })
         console.log(response._id);
        await  uploadNewWallpaper(filePath,response._id);
        return  res.sendStatus(201);
     } catch (error) {
+      console.log(error)
        return res.sendStatus(500);
         
     }
@@ -41,6 +44,7 @@ const addCategoryController=async(req:Express.Request,res:Express.Response)=>{
         let response=await categoryModel.create({
            title:category,
            previewUrl:"placeholder",
+         
         })
         console.log(response._id);
        await  uploadCategoryImage(filePath,response._id);
