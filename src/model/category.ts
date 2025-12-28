@@ -29,8 +29,5 @@ const categorySchmea=new mongoose.Schema({
     }
 },{timestamps:true});
 
-const categoryModel=mongoose.model("category",categorySchmea);
 
-export{
-    categoryModel,Category
-}
+export default mongoose.models.category||mongoose.model("category",categorySchmea)

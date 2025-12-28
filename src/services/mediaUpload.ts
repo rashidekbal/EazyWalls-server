@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-import {  categoryModel } from "../model/category.js";
-import {  wallpaperModel } from "../model/wallpaper.js";
+import  categoryModel  from "../model/category.js";
+import   wallpaperModel  from "../model/wallpaper.js";
 import uploadOnColudinary from "./cloudinary.js";
 
 const getPreviewUrl=(url:string)=>{

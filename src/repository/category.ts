@@ -1,4 +1,4 @@
-import { categoryModel } from "../model/category.js";
+import  categoryModel  from "../model/category.js";
 const getCategories=async()=>{
    return await categoryModel.aggregate([
   {

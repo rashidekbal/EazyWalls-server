@@ -63,5 +63,5 @@ const wallpaperSchema=new mongoose.Schema({
     }
     
 },{timestamps:true});
-const wallpaperModel=mongoose.model("wallpaper",wallpaperSchema);
-export {wallpaperModel,Wallpaper}
+
+export default mongoose.models.wallpaper||mongoose.model("wallpaper",wallpaperSchema)

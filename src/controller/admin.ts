@@ -1,9 +1,11 @@
 import Express, { response } from "express"
 import { updateCategoryImage, uploadCategoryImage, uploadNewWallpaper } from "../services/mediaUpload.js";
-import { wallpaperModel } from "../model/wallpaper.js";
-import { categoryModel } from "../model/category.js";
+import  wallpaperModel from "../model/wallpaper.js";
+import categoryModel  from "../model/category.js";
 import { addFeatured, AddTrending, deleteWallpaper, removeFeatured, removeTrending } from "../repository/wallpaper.js";
+import connectDB from "../db/connection.js";
 const uploadWallpaperController=async(req:Express.Request,res:Express.Response)=>{
+   await connectDB();
     const filePath:string|undefined=req.file?.path;
     const category:string|undefined=req.body?.category;
     let tag:string|undefined=req.body?.tags;
@@ -37,6 +39,7 @@ const uploadWallpaperController=async(req:Express.Request,res:Express.Response)=
 }
 
 const addCategoryController=async(req:Express.Request,res:Express.Response)=>{
+   await connectDB();
     const filePath:string|undefined=req.file?.path;
     const category:string|undefined=req.body?.category;
      if(!filePath||!category)return res.sendStatus(400);
@@ -56,6 +59,7 @@ const addCategoryController=async(req:Express.Request,res:Express.Response)=>{
 
 }
 const deleteWallpaperController=async(req:Express.Request,res:Express.Response)=>{
+   await connectDB();
    let ids:string|undefined=req.body?.ids;
    if(!ids)return response.sendStatus(400);
    let idArray:string[]=ids.split(",");
@@ -75,6 +79,7 @@ const deleteWallpaperController=async(req:Express.Request,res:Express.Response)=
    
 }
 const updateCategoryPreviewUrlController=async(req:Express.Request,res:Express.Response)=>{
+   await connectDB();
     const filePath:string|undefined=req.file?.path;
     const category:string|undefined=req.body?.category;
      if(!filePath||!category)return res.sendStatus(400);
@@ -89,6 +94,7 @@ const updateCategoryPreviewUrlController=async(req:Express.Request,res:Express.R
 }
 
 const removeTrendingController=async(req:Express.Request,res:Express.Response)=>{
+   await connectDB();
     let ids:string|undefined=req.body?.ids;
    if(!ids)return response.sendStatus(400);
    let idArray:string[]=ids.split(",");
@@ -107,6 +113,7 @@ const removeTrendingController=async(req:Express.Request,res:Express.Response)=>
 
 }
 const removeFeaturedController=async(req:Express.Request,res:Express.Response)=>{
+   await connectDB();
     let ids:string|undefined=req.body?.ids;
    if(!ids)return response.sendStatus(400);
    let idArray:string[]=ids.split(",");
@@ -125,6 +132,7 @@ const removeFeaturedController=async(req:Express.Request,res:Express.Response)=>
 
 }
 const addTrendingWallpaperController=async(req:Express.Request,res:Express.Response)=>{
+   await connectDB();
     let ids:string|undefined=req.body?.ids;
    if(!ids)return response.sendStatus(400);
    let idArray:string[]=ids.split(",");
@@ -143,6 +151,7 @@ const addTrendingWallpaperController=async(req:Express.Request,res:Express.Respo
 
 }
 const addFeaturedWallpaperController=async(req:Express.Request,res:Express.Response)=>{
+   await connectDB();
     let ids:string|undefined=req.body?.ids;
    if(!ids)return response.sendStatus(400);
    let idArray:string[]=ids.split(",");

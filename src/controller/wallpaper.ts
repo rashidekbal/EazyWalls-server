@@ -2,7 +2,9 @@ import express from "express";
 import ApiError from "../common/apieError.js";
 import { getNonFeaturedWallpapers, getNonTrendingWallPapers, getWallpapers, getWallpapersOfType } from "../repository/wallpaper.js";
 import ApiResponse from "../common/apiResponse.js";
+import connectDB from "../db/connection.js";
 const getWallaperController=async(req:express.Request,res:express.Response)=>{
+  await connectDB();
     const category:string|undefined=req.query?.category as string;
     const wallpaperType:string|undefined=req.query?.type as string;
     try {
@@ -34,6 +36,7 @@ const getWallaperController=async(req:express.Request,res:express.Response)=>{
 
 }
 const getNonFeaturedWallpaperController=async(req:express.Request,res:express.Response)=>{
+  await connectDB();
   try{
 let response=await getNonFeaturedWallpapers();
     return res.status(200).json(new ApiResponse(response));
@@ -43,6 +46,7 @@ let response=await getNonFeaturedWallpapers();
 
 }
 const getNonTrendingWallpaperController=async(req:express.Request,res:express.Response)=>{
+  await connectDB();
   try{
 let response=await getNonTrendingWallPapers();
     return res.status(200).json(new ApiResponse(response));
