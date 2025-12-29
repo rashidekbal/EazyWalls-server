@@ -1,6 +1,7 @@
 import mongoose, { mongo } from "mongoose";
 import { Wallpapertype } from "../common/enum.js";
 import  wallpaperModel  from "../model/wallpaper.js";
+import { buildFuzzyRegex } from "../utils/Regex.js";
 const getWallpapers = async (category: string | null, page: number) => {
   //page number is taken for pagination;
   if (category) {
@@ -69,6 +70,14 @@ const addFeatured = async (id: string) => {
     { $set: { featured: true, trending: false } }
   );
 };
+
+const searchWallpaper=async(tag:string)=>{
+  return wallpaperModel.find({tags:{
+    $regex:buildFuzzyRegex(tag),
+    $options:"i"
+  }});
+
+}
 export {
   getWallpapers,
   getWallpapersOfType,
@@ -79,4 +88,5 @@ export {
   AddTrending,
   addFeatured,
   removeFeatured,
+  searchWallpaper,
 };

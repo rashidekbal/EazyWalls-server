@@ -1,4 +1,6 @@
+import category from "../model/category.js";
 import  categoryModel  from "../model/category.js";
+import { buildFuzzyRegex } from "../utils/Regex.js";
 const getCategories=async()=>{
    return await categoryModel.aggregate([
   {
@@ -34,5 +36,13 @@ const getCategories=async()=>{
 ]);
 
 }
+const searchCategories=async(category:string)=>{
+  return categoryModel.find({
+    title:{
+      $regex:buildFuzzyRegex(category),
+      $options:"i"
+    }
+  })
+}
 
-export {getCategories}
+export {getCategories,searchCategories}
