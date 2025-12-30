@@ -4,6 +4,7 @@ import  wallpaperModel from "../model/wallpaper.js";
 import categoryModel  from "../model/category.js";
 import { addFeatured, AddTrending, deleteWallpaper, removeFeatured, removeTrending } from "../repository/wallpaper.js";
 import connectDB from "../db/connection.js";
+import mongoose from "mongoose";
 const uploadWallpaperController=async(req:Express.Request,res:Express.Response)=>{
    
     const filePath:string|undefined=req.file?.path;
@@ -37,6 +38,32 @@ const uploadWallpaperController=async(req:Express.Request,res:Express.Response)=
     }
   
     
+}
+const wallpaperUpdateController=async(req:Express.Request,res:Express.Response)=>{
+  const id=req.body.id as string;
+  const category= req.body.category as string;
+  const tag=req.body.tags as string;
+  const author=req.body.author as string ;
+  const isTrending=req.body.isTrending as boolean;
+  const isFeatured=req.body.isFeatured as boolean;
+  if(!id) return res.sendStatus(400);
+  const _id=mongoose.Types.ObjectId.createFromHexString(id);
+  const tags=tag.split(",");
+  try {
+  await wallpaperModel.updateOne({_id:_id},{$set:{
+   isFeatured:isFeatured,
+   isTrending:isTrending,
+   author:author,
+   category:category,
+   tags:tags
+  }})
+   return  res.sendStatus(200);
+  } catch (error) {
+   console.log("error occured :" ,error);
+ return  res.sendStatus(500);
+   
+  }
+
 }
 
 const addCategoryController=async(req:Express.Request,res:Express.Response)=>{
@@ -179,4 +206,4 @@ const addFeaturedWallpaperController=async(req:Express.Request,res:Express.Respo
 }
 
 
-export {uploadWallpaperController,addCategoryController,deleteWallpaperController,updateCategoryPreviewUrlController,removeTrendingController,addTrendingWallpaperController,addFeaturedWallpaperController,removeFeaturedController}
+export {uploadWallpaperController,addCategoryController,deleteWallpaperController,updateCategoryPreviewUrlController,removeTrendingController,addTrendingWallpaperController,addFeaturedWallpaperController,removeFeaturedController,wallpaperUpdateController}

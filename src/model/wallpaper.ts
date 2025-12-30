@@ -1,6 +1,6 @@
 import mongoose, { ObjectId } from "mongoose";
 interface Wallpaper{
-    _id:mongoose.Types.ObjectId,
+    _id:string,
     category:string,
     tags:string[],
     author:string,
@@ -65,3 +65,4 @@ const wallpaperSchema=new mongoose.Schema({
 },{timestamps:true});
 
 export default mongoose.models.wallpaper||mongoose.model("wallpaper",wallpaperSchema)
+export {Wallpaper as wallpaperInterface}

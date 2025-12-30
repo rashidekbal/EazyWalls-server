@@ -1,6 +1,6 @@
 import mongoose, { mongo } from "mongoose";
 import { Wallpapertype } from "../common/enum.js";
-import  wallpaperModel  from "../model/wallpaper.js";
+import  wallpaperModel, { wallpaperInterface }  from "../model/wallpaper.js";
 import { buildFuzzyRegex } from "../utils/Regex.js";
 const getWallpapers = async (category: string | null, page: number) => {
   //page number is taken for pagination;
@@ -75,7 +75,7 @@ const searchWallpaper=async(tag:string)=>{
   return wallpaperModel.find({tags:{
     $regex:buildFuzzyRegex(tag),
     $options:"i"
-  }});
+  }}).limit(50);
 
 }
 export {
