@@ -36,6 +36,9 @@ const getCategories=async()=>{
 ]);
 
 }
+const deleteCategory=async(category:string)=>{
+  return categoryModel.deleteOne({title:category})
+}
 const searchCategories=async(category:string)=>{
   return categoryModel.find({
     title:{
@@ -45,4 +48,4 @@ const searchCategories=async(category:string)=>{
   })
 }
 
-export {getCategories,searchCategories}
+export {getCategories,searchCategories,deleteCategory}

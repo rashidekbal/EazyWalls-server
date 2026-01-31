@@ -9,7 +9,7 @@ app.listen(port?port:8000,(err):void=>{
         return ;
     }
     if(production==="false"){
- connectDB();
+        connectDB();
     }
     
         console.log(`server running at port ${port}`);

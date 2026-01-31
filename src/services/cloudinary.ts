@@ -18,7 +18,9 @@ async function uploadOnColudinary(localpath:string) {
     let response = await cloudinary.uploader.upload(localpath, {
       resource_type: "auto",
     });
+
     fs.unlinkSync(localpath);
+    
     return {
       secure_url: response.secure_url,
       height: response.height,

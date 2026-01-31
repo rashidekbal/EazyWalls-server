@@ -5,6 +5,8 @@ import categoryModel  from "../model/category.js";
 import { addFeatured, AddTrending, deleteWallpaper, removeFeatured, removeTrending } from "../repository/wallpaper.js";
 import connectDB from "../db/connection.js";
 import mongoose from "mongoose";
+import { deleteCategory } from "../repository/category.js";
+import ApiResponse from "../common/apiResponse.js";
 const uploadWallpaperController=async(req:Express.Request,res:Express.Response)=>{
    
     const filePath:string|undefined=req.file?.path;
@@ -28,7 +30,6 @@ const uploadWallpaperController=async(req:Express.Request,res:Express.Response)=
             height:0,
             width:0
         })
-        console.log(response._id);
        await  uploadNewWallpaper(filePath,response._id);
        return  res.sendStatus(201);
     } catch (error) {
@@ -78,8 +79,21 @@ const addCategoryController=async(req:Express.Request,res:Express.Response)=>{
            previewUrl:"placeholder",
          
         })
+         let createWallpaper=await wallpaperModel.create({
+            category:category,
+            tags:[],
+            author:"rashid",
+            previewUrl:null,
+            originalUrl:"placeholder",
+            status:"uploading",
+            trending:false,
+            featured:false,
+            height:0,
+            width:0
+        })
+
         console.log(response._id);
-       await  uploadCategoryImage(filePath,response._id);
+       await  uploadCategoryImage(filePath,response._id,createWallpaper._id);
        return  res.sendStatus(201);
     } catch (error) {
        return res.sendStatus(500);
@@ -204,6 +218,20 @@ const addFeaturedWallpaperController=async(req:Express.Request,res:Express.Respo
    }
 
 }
+const categoryDeleteController=async(req:Express.Request,res:Express.Response)=>{
+     const category:string|undefined=req.body?.category;
+     if(!category){return res.sendStatus(400);
+     }
+     try {
+      await connectDB();
+      await deleteCategory(category);
+      return res.status(200).json("ok")
+     } catch (error) {
+      console.log(error);
+      return res.sendStatus(500);
+     }
+
+}
 
 
-export {uploadWallpaperController,addCategoryController,deleteWallpaperController,updateCategoryPreviewUrlController,removeTrendingController,addTrendingWallpaperController,addFeaturedWallpaperController,removeFeaturedController,wallpaperUpdateController}
+export {uploadWallpaperController,addCategoryController,deleteWallpaperController,updateCategoryPreviewUrlController,removeTrendingController,addTrendingWallpaperController,addFeaturedWallpaperController,removeFeaturedController,wallpaperUpdateController,categoryDeleteController}
