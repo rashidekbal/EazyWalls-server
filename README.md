@@ -51,7 +51,7 @@ CLOUDINARY_CLOUD_NAME=your_cloud_name
 CLOUDINARY_API_KEY=your_api_key
 CLOUDINARY_SECRET_KEY=your_api_secret
 
-# Email (for OTP)
+# Email (for admin panel)
 EMAIL=your_email@example.com
 EMAIL_PASS=your_email_app_password
 
