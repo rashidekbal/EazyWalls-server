@@ -4,6 +4,7 @@ import admin_router from "./routes/admin.js"
 import categoryRouter from "./routes/category.js"
 import wallpaperRouter from "./routes/wallpaper.js"
 import searchRouter from "./routes/search.js"
+import authRouter from "./routes/Auth.route.js"
 import "dotenv/config"
 const production=process.env.PRODUCTION;
 const app =express();
@@ -18,4 +19,5 @@ app.use("/api/v1/admin",admin_router);
 app.use("/api/v1/category",categoryRouter);
 app.use("/api/v1/wallpaper",wallpaperRouter);
 app.use("/api/v1/search",searchRouter);
+app.use("/api/v1/auth",authRouter)
 export default app;

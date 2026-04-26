@@ -1,0 +1,7 @@
+ enum serviceErrorType{
+    USER_NOT_FOUND="USER_NOT_FOUND",
+    WRONG_PASSWORD="WRONG_PASSWORD",
+    INTERNAL_SERVICE_ERROR="INTERNAL_SERVICE_ERROR"
+
+}
+export default serviceErrorType

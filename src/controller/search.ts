@@ -1,5 +1,5 @@
 import express  from "express";
-import ApiError from "../common/apieError.js";
+import ApiError from "../common/apiError.js";
 import { searchWallpaper } from "../repository/wallpaper.js";
 import ApiResponse from "../common/apiResponse.js";
 import { searchCategories } from "../repository/category.js";

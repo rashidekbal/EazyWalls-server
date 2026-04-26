@@ -1,5 +1,5 @@
 import express from "express";
-import ApiError from "../common/apieError.js";
+import ApiError from "../common/apiError.js";
 import { getNonFeaturedWallpapers, getNonTrendingWallPapers, getWallpapers, getWallpapersOfType } from "../repository/wallpaper.js";
 import ApiResponse from "../common/apiResponse.js";
 import connectDB from "../db/connection.js";

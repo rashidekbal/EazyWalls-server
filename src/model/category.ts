@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-interface Category{
+export interface Category{
     _id:string,
     title:string,
     previewUrl:string,

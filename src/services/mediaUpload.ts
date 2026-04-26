@@ -136,4 +136,4 @@ const updateCategoryImage = async (
 
 
 };
-export { uploadNewWallpaper, uploadCategoryImage,updateCategoryImage,updateWallpaperUrl };
+export { uploadNewWallpaper, uploadCategoryImage,updateCategoryImage,updateWallpaperUrl ,getPreviewUrl};

@@ -1,7 +1,7 @@
 import  categoryModel  from "../model/category.js";
 import  Express  from "express";
 import { getCategories } from "../repository/category.js";
-import ApiError from "../common/apieError.js";
+import ApiError from "../common/apiError.js";
 import ApiResponse from "../common/apiResponse.js";
 import connectDB from "../db/connection.js";
 
