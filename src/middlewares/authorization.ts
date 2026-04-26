@@ -3,7 +3,7 @@ import ApiError from "../common/apiError.js";
 import jwt, { JwtPayload } from "jsonwebtoken"
 import { getJwtSecret } from "../utils/env-values-fetcher.js";
 import logger from "../utils/pino.js";
-const verifyOtpJwt=async (req:express.Request,res:express.Response,next:NextFunction)=>{
+const verifyToken=async (req:express.Request,res:express.Response,next:NextFunction)=>{
     try {
         const header=req.headers;
         const authorizationn=header["authorization"];
@@ -11,7 +11,7 @@ const verifyOtpJwt=async (req:express.Request,res:express.Response,next:NextFunc
         const token=authorizationn.split(" ")[1];
         if(!token)return res.status(401).json(new ApiError("no bearer token found in auth header"));
         const result= jwt.verify(token,getJwtSecret()) as JwtPayload;
-        req.auth={otpSigned_email:result.email};
+        req.auth={email:result.email};
         next();
         
     } catch (error) {
@@ -21,4 +21,4 @@ const verifyOtpJwt=async (req:express.Request,res:express.Response,next:NextFunc
     }
 
 }
-export default verifyOtpJwt;
+export default verifyToken;

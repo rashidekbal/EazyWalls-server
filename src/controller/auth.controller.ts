@@ -18,7 +18,7 @@ const registerController = async (
   res: Express.Response,
 ) => {
   try {
-    const email = req.auth?.email as string;
+    const email = req.auth?.otpSigned_email as string;
     if (!isValidEmail(email))
       return res.status(401).json(new ApiError("invalid auth token"));
     const password = req.body.password;

@@ -4,7 +4,8 @@ declare global{
     namespace Express{
         interface Request{
             auth?:{
-                email:string
+                email?:string,
+                otpSigned_email?:string
             }
         }
     }

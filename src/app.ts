@@ -16,6 +16,7 @@ app.get("/", (req, res) => {
 if(production==="false"){
 app.use("/api/v1/admin",admin_router);
 }
+
 app.use("/api/v1/category",categoryRouter);
 app.use("/api/v1/wallpaper",wallpaperRouter);
 app.use("/api/v1/search",searchRouter);
