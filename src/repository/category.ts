@@ -1,51 +1,49 @@
-import category from "../model/category.js";
-import  categoryModel  from "../model/category.js";
+import categoryModel from "../model/category.js";
 import { buildFuzzyRegex } from "../utils/Regex.js";
-const getCategories=async()=>{
-   return await categoryModel.aggregate([
-  {
-    $match: {
-      status: "success",
+const getCategories = async () => {
+  return await categoryModel.aggregate([
+    {
+      $match: {
+        status: "success",
+      },
     },
-  },
-  {
-    $lookup: {
-      from: "wallpapers",
-      localField: "title",
-      foreignField: "category",
-      as: "wallpaper",
+    {
+      $lookup: {
+        from: "wallpapers",
+        localField: "title",
+        foreignField: "category",
+        as: "wallpaper",
+      },
     },
-  },
-  {
-    $addFields: {
-      wallpaperCount: { $size: "$wallpaper" },
+    {
+      $addFields: {
+        wallpaperCount: { $size: "$wallpaper" },
+      },
     },
-  },
-  {
-    $sort: {
-      updatedAt: -1,
+    {
+      $sort: {
+        updatedAt: -1,
+      },
     },
-  },
-  {
-    $project: {
-      wallpaper: 0,
-      createdAt: 0,
-      __v: 0,
+    {
+      $project: {
+        wallpaper: 0,
+        createdAt: 0,
+        __v: 0,
+      },
     },
-  },
-]);
-
-}
-const deleteCategory=async(category:string)=>{
-  return categoryModel.deleteOne({title:category})
-}
-const searchCategories=async(category:string)=>{
+  ]);
+};
+const deleteCategory = async (category: string) => {
+  return categoryModel.deleteOne({ title: category });
+};
+const searchCategories = async (category: string) => {
   return categoryModel.find({
-    title:{
-      $regex:buildFuzzyRegex(category),
-      $options:"i"
-    }
-  })
-}
+    title: {
+      $regex: buildFuzzyRegex(category),
+      $options: "i",
+    },
+  });
+};
 
-export {getCategories,searchCategories,deleteCategory}
+export { getCategories, searchCategories, deleteCategory };
