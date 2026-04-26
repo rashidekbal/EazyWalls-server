@@ -54,7 +54,9 @@ const getFavouriteController = async (
 ) => {
   try {
     const email = req.auth?.email as string;
-    const page=req.query?.page;
+    let pageQuery=req.query?.page;
+    let page=Number(pageQuery)
+    if(isNaN(Number(page)))page=1;
     if (!isValidEmail(email))
       return res
         .status(401)

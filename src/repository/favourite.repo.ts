@@ -40,6 +40,6 @@ export default class FavouriteRepo {
     {$project:{
         "wallpapers":1
     }}
-    ]);
+    ]).limit(db_record_limit).skip((page-1)*db_record_limit);
   };
 }
